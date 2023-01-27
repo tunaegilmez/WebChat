@@ -1,8 +1,23 @@
 const express = require("express");
 const socket = require("socket.io");
+const dotenv = require("dotenv");
+const connectDatabase = require("./helpers/database/connectDatabase");
+
+// Environment Variables
+dotenv.config({
+  path: "./config/env/config.env",
+});
+
+//MongoDB Connection
+connectDatabase();
 
 const app = express();
-const server = app.listen(3000);
+
+const PORT = parseInt(process.env.PORT);
+
+const server = app.listen(PORT, () => {
+  console.log(`App Started on ${PORT} : ${process.env.NODE_ENV}`);
+});
 
 app.use(express.static("public"));
 
